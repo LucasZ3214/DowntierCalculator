@@ -13,7 +13,7 @@ pip install pandas matplotlib seaborn
 
 三种历史模式的csv计算结果与四张热力图将保存在 output/ 目录
 
-<img src="output/ARB/full_downtier_rates_heatmap.png " alt="热力图示例" width="600" title="七月空历大班长">
+<img src="output/ARB/arbfull_downtier_rates_heatmap.png " alt="热力图示例" width="600" title="七月空历大班长">
 
 如需其他模式（街机、全真），请自行修改extract_xxx_data()函数
 
