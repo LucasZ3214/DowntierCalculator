@@ -12,7 +12,7 @@ pip install pandas matplotlib seaborn
 从Statshark获取当月数据json（getGlobalUserStats）保存在目录中（data.txt）并运行主脚本
 
 三种历史模式的csv计算结果与四张热力图将保存在 output/ 目录
-![热力图示例](output/ARB/heatmap.png "分房概率热力图")
+![热力图示例](output/ARB/full_downtier_rates_heatmap.png "大班长概率热力图")
 如需其他模式（街机、全真），请自行修改extract_xxx_data()函数
 
 
