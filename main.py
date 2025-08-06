@@ -128,8 +128,10 @@ def process_data_to_dataframe(headers, table_data, weights):
                 'BR': br,
                 'Full Downtier': big_rate,
                 'Downtier': small_rate,
+                'Total Downtier': big_rate + small_rate,
                 'Uptier': uptier_rate,
                 'Full Uptier': buptier_rate,
+                'Total Uptier': uptier_rate + buptier_rate,
                 'Count': total
             })
 
@@ -190,8 +192,10 @@ def get_downtier(mode):
 
         plot_heatmap(df,mode,'Full Downtier', mode+' Full Downtier Rates')
         plot_heatmap(df,mode,'Downtier', mode+' Downtier Rates')
+        plot_heatmap(df, mode, 'Total Downtier', mode + ' Total Downtier Rates')
         plot_heatmap(df,mode,'Uptier', mode+' Uptier Rates')
         plot_heatmap(df, mode, 'Full Uptier', mode+' Full Uptier Rates')
+        plot_heatmap(df, mode, 'Total Uptier', mode + ' Total Uptier Rates')
 
     except Exception as e:
         print(f"发生错误: {str(e)}")
