@@ -63,20 +63,21 @@ def calculate_rates(br_data, current_br):
     计算指定权重作为当前权重时的班长率和壮丁率
     """
     current_br = float(current_br)
-    big_matches = br_data.get(current_br, 0)
-    small_matches = br_data.get(round(current_br + 0.3, 1), 0)
-    uptier_matches = (br_data.get(round(current_br + 0.7, 1), 0) +
-                      br_data.get(round(current_br + 1.0, 1), 0))
+    bd_matches = br_data.get(current_br, 0)
+    sd_matches = br_data.get(round(current_br + 0.3, 1), 0)
+    su_matches = br_data.get(round(current_br + 0.7, 1), 0)
+    bu_matches = br_data.get(round(current_br + 1.0, 1), 0)
 
-    total_matches = big_matches + small_matches + uptier_matches
+    total_matches = bd_matches + sd_matches + su_matches + bu_matches
 
     if total_matches == 0:
-        return 0.0, 0.0, 0.0
+        return 0.0, 0.0, 0.0, 0.0
 
     return (
-        big_matches / total_matches,
-        small_matches / total_matches,
-        uptier_matches / total_matches
+        bd_matches / total_matches,
+        sd_matches / total_matches,
+        su_matches / total_matches,
+        bu_matches / total_matches
     )
 
 
@@ -92,7 +93,7 @@ def process_data_to_dataframe(headers, table_data, weights):
 
         for br in weights:
 
-            big_rate, small_rate, uptier_rate = calculate_rates(br_data, br)
+            big_rate, small_rate, uptier_rate, buptier_rate = calculate_rates(br_data, br)
             total = (br_data.get(br, 0) +
                      br_data.get(round(br + 0.3, 1), 0) +
                      br_data.get(round(br + 0.7, 1), 0) +
@@ -104,6 +105,7 @@ def process_data_to_dataframe(headers, table_data, weights):
                 'Full Downtier': big_rate,
                 'Downtier': small_rate,
                 'Uptier': uptier_rate,
+                'Full Uptier': buptier_rate,
                 'Count': total
             })
 
@@ -159,13 +161,12 @@ def get_downtier(mode):
         df.to_csv(os.path.join(ensure_output_dir(mode),rates_csv), index=False)
         print(f"班长率数据已保存: {rates_csv}")
 
-        # 筛选有足够数据的行
-        df = df[df['Count'] > 100]  # 只保留对局数大于100的数据
+        #df = df[df['Count'] > 100]  # 只保留对局数大于100的数据
 
-        # 绘制三种热力图
         plot_heatmap(df,mode,'Full Downtier', 'Full Downtier Rates')
         plot_heatmap(df,mode,'Downtier', 'Downtier Rates')
         plot_heatmap(df,mode,'Uptier', 'Uptier Rates')
+        plot_heatmap(df, mode, 'Full Uptier', 'Full Uptier Rates')
 
     except Exception as e:
         print(f"发生错误: {str(e)}")
