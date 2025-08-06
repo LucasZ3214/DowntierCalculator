@@ -188,10 +188,10 @@ def get_downtier(mode):
 
         #df = df[df['Count'] > 100]  # 只保留对局数大于100的数据
 
-        plot_heatmap(df,mode,'Full Downtier', mode+'Full Downtier Rates')
-        plot_heatmap(df,mode,'Downtier', mode+'Downtier Rates')
-        plot_heatmap(df,mode,'Uptier', mode+'Uptier Rates')
-        plot_heatmap(df, mode, 'Full Uptier', mode+'Full Uptier Rates')
+        plot_heatmap(df,mode,'Full Downtier', mode+' Full Downtier Rates')
+        plot_heatmap(df,mode,'Downtier', mode+' Downtier Rates')
+        plot_heatmap(df,mode,'Uptier', mode+' Uptier Rates')
+        plot_heatmap(df, mode, 'Full Uptier', mode+' Full Uptier Rates')
 
     except Exception as e:
         print(f"发生错误: {str(e)}")
