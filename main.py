@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 
 def ensure_output_dir(mode):
+    output_dir = Path("output")
+    output_dir.mkdir(exist_ok=True)
     output_dir = Path("output",mode)
     output_dir.mkdir(exist_ok=True)
     return output_dir
@@ -163,10 +165,10 @@ def get_downtier(mode):
 
         #df = df[df['Count'] > 100]  # 只保留对局数大于100的数据
 
-        plot_heatmap(df,mode,'Full Downtier', 'Full Downtier Rates')
-        plot_heatmap(df,mode,'Downtier', 'Downtier Rates')
-        plot_heatmap(df,mode,'Uptier', 'Uptier Rates')
-        plot_heatmap(df, mode, 'Full Uptier', 'Full Uptier Rates')
+        plot_heatmap(df,mode,'Full Downtier', mode+'Full Downtier Rates')
+        plot_heatmap(df,mode,'Downtier', mode+'Downtier Rates')
+        plot_heatmap(df,mode,'Uptier', mode+'Uptier Rates')
+        plot_heatmap(df, mode, 'Full Uptier', mode+'Full Uptier Rates')
 
     except Exception as e:
         print(f"发生错误: {str(e)}")
@@ -185,6 +187,7 @@ def main():
         print(f"处理数据时发生错误: {str(e)}")
     '''
     for mode in ["NRB", "GRB", "ARB"]:
+        ensure_output_dir(mode)
         get_downtier(mode)
 
 if __name__ == "__main__":
