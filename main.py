@@ -65,10 +65,21 @@ def calculate_rates(br_data, current_br):
     计算指定权重作为当前权重时的班长率和壮丁率
     """
     current_br = float(current_br)
-    bd_matches = br_data.get(current_br, 0)
-    sd_matches = br_data.get(round(current_br + 0.3, 1), 0)
-    su_matches = br_data.get(round(current_br + 0.7, 1), 0)
-    bu_matches = br_data.get(round(current_br + 1.0, 1), 0)
+    if str(current_br)[-1] == '0':
+        bd_matches = br_data.get(current_br, 0)
+        sd_matches = br_data.get(round(current_br + 0.3, 1), 0)
+        su_matches = br_data.get(round(current_br + 0.7, 1), 0)
+        bu_matches = br_data.get(round(current_br + 1.0, 1), 0)
+    if str(current_br)[-1] == '3':
+        bd_matches = br_data.get(current_br, 0)
+        sd_matches = br_data.get(round(current_br + 0.4, 1), 0)
+        su_matches = br_data.get(round(current_br + 0.7, 1), 0)
+        bu_matches = br_data.get(round(current_br + 1.0, 1), 0)
+    if str(current_br)[-1] == '7':
+        bd_matches = br_data.get(current_br, 0)
+        sd_matches = br_data.get(round(current_br + 0.3, 1), 0)
+        su_matches = br_data.get(round(current_br + 0.6, 1), 0)
+        bu_matches = br_data.get(round(current_br + 1.0, 1), 0)
 
     total_matches = bd_matches + sd_matches + su_matches + bu_matches
 
@@ -96,10 +107,21 @@ def process_data_to_dataframe(headers, table_data, weights):
         for br in weights:
 
             big_rate, small_rate, uptier_rate, buptier_rate = calculate_rates(br_data, br)
-            total = (br_data.get(br, 0) +
-                     br_data.get(round(br + 0.3, 1), 0) +
-                     br_data.get(round(br + 0.7, 1), 0) +
-                     br_data.get(round(br + 1.0, 1), 0))
+            if str(br)[-1] == '0':
+                total = (br_data.get(br, 0) +
+                         br_data.get(round(br + 0.3, 1), 0) +
+                         br_data.get(round(br + 0.7, 1), 0) +
+                         br_data.get(round(br + 1.0, 1), 0))
+            if str(br)[-1] == '3':
+                total = (br_data.get(br, 0) +
+                         br_data.get(round(br + 0.4, 1), 0) +
+                         br_data.get(round(br + 0.7, 1), 0) +
+                         br_data.get(round(br + 1.0, 1), 0))
+            if str(br)[-1] == '7':
+                total = (br_data.get(br, 0) +
+                         br_data.get(round(br + 0.3, 1), 0) +
+                         br_data.get(round(br + 0.6, 1), 0) +
+                         br_data.get(round(br + 1.0, 1), 0))
 
             results.append({
                 'Country': country,
@@ -134,6 +156,7 @@ def plot_heatmap(df,mode,rate_type='Full Downtier', title='Full Downtier Rates')
     plt.title(title, fontsize=16)
     plt.ylabel('Battle Rating', fontsize=12)
     plt.xlabel('Country', fontsize=12)
+    plt.yticks(rotation=0)
     plt.tight_layout()
 
     # 保存图像
