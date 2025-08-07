@@ -207,7 +207,10 @@ def process_data_to_dataframe(headers, table_data, weights,mode, win_rate_data):
             if not match.empty:
                 win_rate = match.iloc[0]['WinRate']
 
-            weighted = (big_rate*1 + small_rate*0.5 + uptier_rate*-0.5 + buptier_rate*-1)*((win_rate-0.5)*10)
+            if win_rate == 0.0:
+                weighted = 0
+            else:
+                weighted = (big_rate*1 + small_rate*0.5 + uptier_rate*-0.5 + buptier_rate*-1)*((win_rate-0.5)*10)
             results.append({
                 'Country': country,
                 'BR': br,
