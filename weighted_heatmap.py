@@ -299,7 +299,6 @@ def get_winrate(mode):
         raise
 
 def main():
-
     '''
     mode = input("请输入模式 (NRB, GRB, ARB): ").strip().upper()
     if mode not in ["NRB", "GRB", "ARB"]:

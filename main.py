@@ -18,20 +18,35 @@ def read_json_from_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
-def extract_ship_data(data):
+def extract_nrb_data(data):
     if "Ship Realistic" not in data:
         raise ValueError("数据中缺少'Ship Realistic'部分")
     return data["Ship Realistic"]
 
-def extract_ground_data(data):
+def extract_grb_data(data):
     if "Tank Realistic" not in data:
         raise ValueError("数据中缺少'Tank Realistic'部分")
     return data["Tank Realistic"]
 
-def extract_air_data(data):
+def extract_arb_data(data):
     if "Air Realistic" not in data:
         raise ValueError("数据中缺少'Air Realistic'部分")
     return data["Air Realistic"]
+
+def extract_nab_data(data):
+    if "Ship Arcade" not in data:
+        raise ValueError("数据中缺少'Ship Arcade'部分")
+    return data["Ship Arcade"]
+
+def extract_gab_data(data):
+    if "Tank Arcade" not in data:
+        raise ValueError("数据中缺少'Tank Arcade'部分")
+    return data["Tank Arcade"]
+
+def extract_aab_data(data):
+    if "Air Arcade" not in data:
+        raise ValueError("数据中缺少'Air Arcade'部分")
+    return data["Air Arcade"]
 
 def prepare_table_data(data):
     """准备表格数据"""
@@ -174,13 +189,19 @@ def get_downtier(mode):
 
         data = read_json_from_file(input_file)
         if mode == "NRB":
-            pdata = extract_ship_data(data)
+            pdata = extract_nrb_data(data)
         elif mode == "GRB":
-            pdata = extract_ground_data(data)
+            pdata = extract_grb_data(data)
         elif mode == "ARB":
-            pdata = extract_air_data(data)
+            pdata = extract_arb_data(data)
+        elif mode == "NAB":
+            pdata = extract_nab_data(data)
+        elif mode == "GAB":
+            pdata = extract_gab_data(data)
+        elif mode == "AAB":
+            pdata = extract_aab_data(data)
         else:
-            raise ValueError("无效的模式，请选择 'NRB', 'GRB' 或 'ARB'")
+            raise ValueError("无效的模式")
         headers, table_data, weights = prepare_table_data(pdata)
         save_to_csv(headers, table_data, output_csv,mode)
 
@@ -213,7 +234,7 @@ def main():
     except Exception as e:
         print(f"处理数据时发生错误: {str(e)}")
     '''
-    for mode in ["NRB", "GRB", "ARB"]:
+    for mode in ["NAB","GAB", "AAB", "NRB", "GRB", "ARB"]:
         ensure_output_dir(mode)
         get_downtier(mode)
 
